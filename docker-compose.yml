@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  database:
+    container_name: database
+    image: mysql:5.7
+    command: mysqld --user=root --verbose
+    ports:
+      - "${MYSQL_EXPOSE_PORT}:${MYSQL_PORT}"
+    environment:
+      MYSQL_DATABASE: "${MYSQL_NAME}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    restart: always
+
+  gateway:
+    container_name: gateway
+    build: ./services/gateway
+    ports:
+      - "${GATEWAY_EXPOSE_PORT}:${GATEWAY_PORT}"
+    volumes:
+      - ./services/gateway:/var/www/html
+      - ./services/gateway/nginx.conf:/etc/nginx/sites-available/default.conf
+      #- ./services/shared:/var/www/html/shared
+    restart: always
+
+
