@@ -26,4 +26,13 @@ services:
       #- ./services/shared:/var/www/html/shared
     restart: always
 
+  cleverbot:
+    container_name: cleverbot
+    build: ./services/cleverbot
+    ports:
+      - "${CLEVERBOT_EXPOSE_PORT}:${CLEVERBOT_PORT}"
+    environment:
+      PORT: "${CLEVERBOT_EXPOSE_PORT}"
+    restart: always
+
 
