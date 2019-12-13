@@ -15,7 +15,10 @@ app.get('/', async (req, res) => {
       data: 'No message sent'
     });
 
-    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox'],
+      ignoreHTTPSErrors: true,
+    });
     const page = await browser.newPage();
 
     page.setDefaultNavigationTimeout(0);
